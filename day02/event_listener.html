@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>event_listener</title>
+</head>
+<body>
+  <h1 id='header'></h1>
+  <button id='my-button'>click</button>
+  <script>
+    // 버튼이라는 객체를 자바스크립트로 가져온다.
+    const button = document.querySelector('#my-button')
+    // 클릭 할 때 마다, 함수(콜백함수)를 실행하겠다.(이벤트 리스너라는 함수의 인수로 받는다.)
+    button.addEventListener('click', () => {
+      console.log('아얏')
+    })
+  </script>
+</body>
+</html>

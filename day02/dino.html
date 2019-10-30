@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>dino</title>
+    <style>
+      .bg {
+        background-color: #f7f7f7;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg">
+     
+      <img
+      id="dino"
+      width="200px"
+      height="200px"
+      src="https://art.pixilart.com/3cdd029a803f908.png"
+      alt="dino"
+      />
+
+    </div>
+
+  
+    <script>
+      // 자바스크립트를 이용한 dom 조작
+      const bg = document.querySelector('div.bg')
+      const dino = bg.querySelector('img')
+
+      
+      // dino.remove()  //자기 자신 삭제하기 1
+      // document.querySelector('#dino').remove() // 자기 자신 삭제하기 2
+
+      // 자식요소 삭제하기
+      // bg.firstElementChild.remove() // 1 첫번째 자식요소 삭제
+      // bg.removeChild(bg.firstElementChild) // 2
+      // bg.lastElementChild.remove() // 2 마지막 자식요소 삭제하기
+      // bg.removeChild(bg.lastElementChild) // 2
+      // bg.removeChild(dino)  // 특정 자식 삭제
+
+      // 실습 : body에 자식 element가 하나도 없을 때 까지 모든 자식 element를 삭제하는 코드를 작성하라.
+      // body = document.querySelector('body')
+      // while ( body.firstElementChild !== null) {
+      //   body.firstElementChild.remove()
+      // }
+      // bg.remove()
+
+      // 새로운 요소 생성하는 법 - document.createElement('<tag:name>')
+      // const bg = document.querySelector('div.bg')
+      // const dino = bg.querySelector('img')
+      
+      
+      // bg.firstElementChild.remove()  // 새롭게 부여할 공간에 있는 태그 삭제 
+
+
+      // const new_dino = document.createElement('img')  // 새로운 요소 생성
+      // new_dino.id = 'newDino'  // id 부여
+      // new_dino.src = 'https://store-images.s-microsoft.com/image/apps.38351.14426311725358695.736eb785-1d29-478c-a909-1900849773e9.4247f5ee-1daa-4c97-96c2-23868f1fbc45?mode=scale&q=90&h=200&w=200&background=%230078D7'
+      // new_dino.alt = 'dino'  // 이미지가 보이지 않는 경우를 위한 텍스트 정보 부여
+      
+      // const content = document.createElement('img')
+      // content.src = 'http://static1.comicvine.com/uploads/original/11112/111129141/5440487-1122329314-52705.png'
+      // content.width = 200
+      // content.height = 200
+
+      // const blank = document.createElement('img')
+      
+      // // 화면(bg)에 보여주기
+
+      // bg.appendChild(new_dino)  // 가장 마지막에 추가
+      // bg.insertBefore(content, bg.firstElementChild)
+      // bg.insertBefore(dino, bg.firstElementChild) // 가장 앞에 있는 요소 그 앞에 추가
+
+      // event listener : 사용자가 클릭하는 그 순간에 함수를 실행시켜라(콜백함수)
+      dino.addEventListener('click', () => {
+        console.log('아야')
+        console.log(event)
+      })
+
+      // html 전체에 이벤트 걸기
+      let down = 0
+      let right = 0
+      // event.preventDefault()
+      // event.stopPropagation()
+
+      // document.addEventListener('keydown', (press)=>{
+      //   if (press.key === 'ArrowDown'){
+      //     // console.log(event)
+      //     console.log('아래') 
+      //     down += 1
+      //     dino.style.marginTop = `${20 * down}px` 
+
+      //   }
+      //   else if (press.key === 'ArrowUp'){
+      //     // console.log(event)
+      //     console.log('위') 
+      //     down -= 1
+      //     dino.style.marginTop = `${20 * down}px`  
+
+
+      //   }
+      //   else if (press.key === 'ArrowLeft'){
+      //     // console.log(event)
+      //     console.log('왼쪽')
+      //     right += 1
+      //     dino.style.marginRight = `${20 * right}px`  
+
+  
+      //   }
+      //   else if (press.key === 'ArrowRight'){
+      //     // console.log(event)
+      //     console.log('오른쪽')  
+      //     right -=1
+      //     dino.style.marginRight = `${20 * right}px` 
+
+      //   }
+      //   else{
+
+      //   }
+      // })
+    
+    dino.style.position = 'absolute'
+    dino.addEventListener('mouseover', ()=>{
+      console.log('mouse overed')
+      const newHeight = window.innerHeight * Math.random()
+      const newWidth = window.innerWidth * Math.random()
+      dino.style.left = newWidth + 'px'
+      dino.style.top = newHeight + 'px'
+    })
+    </script>
+  </body>
+</html>

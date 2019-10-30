@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Shopping List</title>
+</head>
+<body>
+  <h1>My Shopping List</h1>
+  <div class='whole'>
+    Enter a new Item : 
+    <input type="text" class='inputVar'>
+    <button class=btn>Add item</button>
+  </div>
+  <ul class='shoppingList'>
+  </ul>
+  <script>
+    const h1 = document.querySelector('h1')
+    const ul = document.querySelector('ul')
+    h1.innerText = 'My Shopping List'
+    const input = document.querySelector('input')
+    input.value = 'asdasd' // 하면 저 input에 값이 입력되고, 반대로 
+    const btn = document.querySelector('.btn')
+    
+    let count = 1
+    btn.addEventListener('click', ()=>{
+      if (input.value !== '') {
+        
+        const newLi = document.createElement('li')
+        const newItem = document.createElement('span')
+        const newButton = document.createElement('button')
+        newButton.innerText = 'delete'
+        newLi.appendChild(newItem)
+        ul.insertBefore(newLi, ul.firstElementChild)
+        newLi.appendChild(newButton)
+        newItem.innerText = input.value
+        input.value = ''
+        newButton.addEventListener('click', () =>{
+          newLi.remove()
+        })
+      }
+
+      
+    })
+
+  </script>
+</body>
+</html>
