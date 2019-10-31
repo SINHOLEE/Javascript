@@ -107,3 +107,5 @@ let flag = true
 
 const result = flag ? '참' : '거짓'
 console.log(result)
+
+

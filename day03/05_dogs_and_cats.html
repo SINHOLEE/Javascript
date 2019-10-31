@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Axios -->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+  <title>dogs_and_cats</title>
+  <style>
+    img {
+      width: 300px;
+      height: 300px;
+    }
+  </style>
+</head>
+<body>  
+  <h1>댕댕이</h1>
+  <button class="createDogs">
+    개내나
+  </button>
+  <button class="createCats">
+      냥내나
+    </button>
+  <div class="animals">
+  </div>
+  <script>
+    const API_URL = 'https://dog.ceo/api/breeds/image/random'
+    const API_URL1 = 'https://api.thecatapi.com/v1/images/search'
+    const btn1 = document.querySelector('.createDogs')
+    const btn2 = document.querySelector('.createCats')
+    // 페이지를 한 번 열었을 때만 실행
+    const getDogImage = function() {
+      axios.get(API_URL)
+      .then(function(response) {
+        const imageUrl = response.data.message
+        const dogImage = document.createElement('img')
+        dogImage.src = imageUrl
+        dogImage.alt = 'dog'
+        const animals = document.querySelector('.animals')
+        animals.appendChild(dogImage)
+        })
+      }
+      const getCatImage = function(){
+        axios.get(API_URL1)
+        .then(function(response) {
+          const imageUrl = response.data[0].url
+          const catImage = document.createElement('img')
+          catImage.src = imageUrl
+          catImage.alt = 'cat'
+          const animals = document.querySelector('.animals')
+          animals.appendChild(catImage)
+          })
+      
+    }
+
+    btn1.addEventListener('click', () =>{
+    
+      getDogImage()
+    })
+    btn2.addEventListener('click', () =>{
+    
+    getCatImage()
+  })
+
+  </script>
+  
+</body>
+</html>

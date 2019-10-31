@@ -51,8 +51,9 @@ console.log(my_fav)
 
 // 하지만 local scope에서는 재 할당 가능하다.
 if (my_fav === 2) {
-    const my_fav = 30
     console.log(my_fav)
+    // const my_fav = 30
+    // console.log(my_fav)
 }
 console.log(my_fav)
 
@@ -83,5 +84,5 @@ console.log(q)
 // 파스칼 케이스(PascalCase) : 클래스, 생성자 (UperCamelCase) 첫글자 포함 모든 단어의 시작을 대문자로
 class User {}
 
-//  대문자 스케이크 케이스 : 상수
+//  대문자 스네이크 케이스 : 상수
 const API_KEY = 'asdasdasdasdasd'

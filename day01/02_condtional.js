@@ -20,24 +20,27 @@
 
 
 // switch : 
-// const username = prompt('whe are you')
+const username = prompt('whe are you')
 
-// let message = ''
-// switch(username) {
-//     case 'ssafy' : {
-//         message = '<h1>Welcome to SSAFY</h1>'
-//         break
-//     }
-//     case 'admin' : {
-//         message = '<h1>주인님 하이</h1>'
-//         break
-//     }
-//     default :{
-//         message = `<h1> Hi ${username} </h1>`
-//     }
+let message = ''
+switch(username) {
+    case 'ssafy' : {
+        message = '<h1>Welcome to SSAFY</h1>'
+        document.write(message)
 
-// }
+    }
+    case 'admin' : {
+        message = '<h1>주인님 하이</h1>'
+        document.write(message)
+        
 
-// document.write(message)
+    }
+    default :{
+        message = `<h1> Hi ${username} </h1>`
+        document.write(message)
+
+    }
+}
+
 
 
