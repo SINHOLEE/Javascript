@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- axios -->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<!-- bootstrap -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <title>Momentum</title>
+  <style>
+    
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin:0;
+    }
+
+    body {
+      background-size: 100%;
+
+    
+    }
+    .up-container {
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+      font-size: 60pt;
+    }
+    p {
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class='up-container text-white' >
+    <p>현재 시각은</p>
+
+  </div>
+<div class="input-group mb-3">
+  <input type="text" class="form-control" placeholder="todo-list" aria-label="todo-list" aria-describedby="button-addon2" id="input-var">
+  <div class="input-group-append">
+    <button class="btn btn-info" type="button" id="button-addon2">Button</button>
+  </div>
+
+  <div>
+    <ul class="list-group">
+      
+      
+    </ul>
+  </div>
+  <script>
+    const URL = 'https://source.unsplash.com/1920x1080/?nature,water'
+    // 1. axios로 image url을 가지고 온다. 
+    const timeTag = document.createElement('p1')
+    const div = document.querySelector('.up-container')
+    div.appendChild(timeTag)
+
+    const clock =  function() {
+
+      const aaa =  new Date().toLocaleTimeString()
+      timeTag.innerText = aaa
+      
+    }
+    setInterval(clock, 1000)
+
+    const addToDoListBtn = document.querySelector('#button-addon2')
+    const ul = document.querySelector('.list-group')
+    addToDoListBtn.addEventListener('click',() =>{
+      const inputVar = document.querySelector('#input-var')
+      const newToDo = document.createElement('li')
+      newToDo.innerText = inputVar.innerText
+      ul.insertBefore(newToDo, ul.firstElementChild)
+
+
+    })
+
+    axios.get(URL)
+      .then(response =>{
+        const image = response.config.url
+        document.body.style.cssText = `BACKGROUND-IMAGE : url(${image})`
+        
+
+
+      } )
+  </script>
+</body>
+</html>

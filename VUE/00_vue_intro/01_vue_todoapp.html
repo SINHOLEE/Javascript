@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- vue 도움되는 콘솔 경고를 포함한 개발 버전 -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <title>Todoapp</title>
+  <style>
+    .completed {
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+  <!-- html 에서는 ""가 컨벤션 -->
+  <div id="app">
+    <h1 v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }">TODO APP</h1>
+    <input type="text" v-model="newTodo" v-on:keydown.enter="addTodo()">
+    <footer>
+      <button v-on:click="clearCompleted">clear completed</button>
+
+    </footer>
+    <!-- for 문을 사용할때 필요한 기능 : 디렉티브(지시문) -->
+    <ul>
+      <!-- <li v-for="todo in todos" v-if="!todo.completed" v-on:click="toggleTodo(todo)"> -->
+      <li v-for="todo in todos" v-bind:class="{ completed: todo.completed }" >
+
+        {{ todo.content }}
+        <!-- true false를 표현할 수 잇는  -->
+        <input type="checkbox" v-model="todo.completed"  style="width:25px;height:25px;" >
+        
+      </li>
+      <!-- <li v-else v-on:click="toggleTodo(todo)">
+        {{ todo.content }} [완료]
+      </li> -->
+    </ul>
+    
+  
+  </div>
+
+  <script>
+    // 스크립트 안에서는 쌍따옴표 홑따옴표 둘다사용가능하지만 홑따옴표를 사용해라.
+    const app = new Vue({
+      el:'#app',
+      data :{
+        todos : [
+          {content : '저녁 메뉴 고민하기' ,
+          completed : true,
+          },
+          {content : '사다리 타기',
+
+          completed : true,
+          },
+          {content : '약속의 2시, 낮잠자기',
+          completed : false,
+          },
+          {content : '야자하기',
+          completed : true,
+          },
+          {content :  '미니 만나기',
+          completed : false,
+          }
+        ],
+        newTodo: '',
+        activeColor: 'orange',
+        fontSize: 30,
+      },
+
+      methods : {
+        toggleTodo : function(todo) {
+          if (todo.completed) {
+            todo.completed = false
+          } else {
+            todo.completed = true
+          }
+
+        },
+        addTodo : function(){
+          this.todos.push({
+            content : this.newTodo,
+            completed: false,
+          })
+          this.newTodo = ""
+        },
+        clearCompleted : function(){
+          this.todos = this.todos.filter(todo => {
+            return todo.completed === false
+          })
+        },
+
+      },
+    })
+  </script>
+</body>
+</html>

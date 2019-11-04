@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- vue 도움되는 콘솔 경고를 포함한 개발 버전 -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <title>Vue Start</title>
+</head>
+<body>
+  <div>
+    {{ message }}
+    <div id="app">
+      <h1>{{ message }}  - {{ count }}</h1>
+      <!-- vue함수의 클릭이라는 기능을 가진 플러스라는 함수를 실행한다. -->
+      <button v-on:click="plus">plus</button>
+      <button v-on:click="minus">minus</button>
+
+    </div>
+  </div>
+  <script>
+    // 모든  애들은 다 div안에 들어감
+    // 바인딩 되어있다 : mwessage내용을 바꿀 때 마다 html 상의 데이터가 새로고침 없이 즉각적으로 반응한다.
+    const app = new Vue ({  // 자바스크립트에서 new라는 키워드는 새로운 인스턴스를 만들 때 사용(인스턴스 : 클래스로부터 새롭게 만든 객체)
+    // 즉 Vue라는 클래스의 새로운 인스턴스가 app이라는 뜻
+      el : '#app',  // el이 가리키는 공간이 저 div#app이라는 뜻으로 key값 설정
+      data : {
+        message : 'Byssssasdasdeasdas Vue!',
+        count : 0,
+      } // data는 object starter이다. (중괄호가 꼭 필요)
+      // el, data 등의 키값은 정해져 있다. -> 공식문서 확인
+      /*
+        함수가 작성될 때,
+        self랑 비슷한 역할을 하는 this를 사용해서, this.message로 접근해서 로직을 실행할 수 있다.
+      */
+      
+      ,
+      // 두번째 오브젝트, 함수를 정의하는 공간
+      methods: {
+       // 무조건 function으로 만들어야 한다. vue에서는 arrow function 쓰면 안돼요
+       // 왜? arrow function으로 정의하면, this.변수 를 가리키지 못한다. 오직 function ()으로 함수를 생성해야지 this로 접근가능해진다.
+       plus : function() {
+          this.count++
+          console.log(this)
+       },
+       
+       // app.data에 있는 key 값과 같은 이름으로 정의하면 안된다.
+       minus : function() {
+         this.count--
+       },
+       // funtcion() {}에서의 this : 내가 정의한 Vue 인스턴스의 최상위 객체
+       // () => {} 에서의 this : 윈도우 객체
+      }
+    })
+
+  </script>
+</body>
+</html>
