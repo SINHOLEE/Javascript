@@ -11,14 +11,22 @@
 <body>
   <div>
     {{ message }}
-    <div id="app">
+    <div id="app"  v-bind:style="{color: activeColor, fontSize: fontSize + 'px' }">
+      <input type="text" v-model='newText'><a v-bind:href="go()">Go!</a>
       <h1>{{ message }}  - {{ count }}</h1>
       <!-- vue함수의 클릭이라는 기능을 가진 플러스라는 함수를 실행한다. -->
       <button v-on:click="plus">plus</button>
       <button v-on:click="minus">minus</button>
+      
+      <button v-on:click="ChangeColor">Toggle</button>
+      <h1>빨강과 파랑을 섞으면 보라가 돼여?</h1>
 
     </div>
+
   </div>
+  
+
+
   <script>
     // 모든  애들은 다 div안에 들어감
     // 바인딩 되어있다 : mwessage내용을 바꿀 때 마다 html 상의 데이터가 새로고침 없이 즉각적으로 반응한다.
@@ -28,6 +36,9 @@
       data : {
         message : 'Byssssasdasdeasdas Vue!',
         count : 0,
+        activeColor: 'red',
+        fontSize: 30,
+        newText : '',
       } // data는 object starter이다. (중괄호가 꼭 필요)
       // el, data 등의 키값은 정해져 있다. -> 공식문서 확인
       /*
@@ -40,6 +51,17 @@
       methods: {
        // 무조건 function으로 만들어야 한다. vue에서는 arrow function 쓰면 안돼요
        // 왜? arrow function으로 정의하면, this.변수 를 가리키지 못한다. 오직 function ()으로 함수를 생성해야지 this로 접근가능해진다.
+       go: function() {
+        return this.newText
+       },
+       ChangeColor: function() {
+         if (this.activeColor === 'red') {
+            this.activeColor = 'blue'
+         } else {
+           this.activeColor = 'red'
+         }
+       },
+       
        plus : function() {
           this.count++
           console.log(this)

@@ -38,29 +38,33 @@
       },
       methods: {
         // 함수를 정의할 때에는... function 쓴다.
-        getDogImage: function() {
+        getDogImage: async function() {
           const API_URL = 'https://dog.ceo/api/breeds/image/random'
           // 정의된 함수 내에서 사용되는 콜백함수에는 arrow function 사용
           // function() 으로 정의했을때의 this === vue instance
-          axios.get(API_URL)
-            .then(response => {
-              // lexical Scope : arrow function을 사용할 때 methods에서 정의한 함수의 this를 따라간다.
-              this.dogImage =  response.data.message
-            })
+          // axios.get(API_URL)
+          //   .then(response => {
+          //     // lexical Scope : arrow function을 사용할 때 methods에서 정의한 함수의 this를 따라간다.
+          //     this.dogImage =  response.data.message
+          //   })
+          const response = await axios.get(API_URL)
+            this.dogImage = response.data.message
           },
-        getCatImage:function() {
+        getCatImage: function() {
           const API_URL = 'https://api.thecatapi.com/v1/images/search'
           axios.get(API_URL)
             .then(response => {
               this.catImage = response.data[0].url
             })
+          // const response = await axios.get(API_URL)
+          // this.catImage = response.data[0].url
           },
-      },
-      // 최초 vue instance 가 생성된 후 실행하는 함수,
-      created: function() {
-          this.getDogImage()
-          this.getCatImage()
         },
+        // 최초 vue instance 가 생성된 후 실행하는 함수,
+        created: function() {
+            this.getDogImage()
+            this.getCatImage()
+          },
 
     })
   </script>

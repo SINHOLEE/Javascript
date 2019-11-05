@@ -19,81 +19,140 @@
   <!-- html 에서는 ""가 컨벤션 -->
   <div id="app">
     <h1 v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }">TODO APP</h1>
+      <select v-model="showMode">
+        <!-- val는 필수값 -->
+        <option value="all">모든목록보기</option>
+        <option value="completed">완료목록보기</option>
+        <option value="notcompleted">todo목록 보기</option>
+      </select>
+      <br>
+    
     <input type="text" v-model="newTodo" v-on:keydown.enter="addTodo()">
-    <footer>
-      <button v-on:click="clearCompleted">clear completed</button>
-
-    </footer>
     <!-- for 문을 사용할때 필요한 기능 : 디렉티브(지시문) -->
     <ul>
       <!-- <li v-for="todo in todos" v-if="!todo.completed" v-on:click="toggleTodo(todo)"> -->
-      <li v-for="todo in todos" v-bind:class="{ completed: todo.completed }" >
-
-        {{ todo.content }}
-        <!-- true false를 표현할 수 잇는  -->
-        <input type="checkbox" v-model="todo.completed"  style="width:25px;height:25px;" >
+        <li 
+        v-for="todo in todoByShowMode" 
+        v-bind:class="{ completed: todo.completed }" 
         
-      </li>
-      <!-- <li v-else v-on:click="toggleTodo(todo)">
-        {{ todo.content }} [완료]
-      </li> -->
-    </ul>
-    
+        v-bind:key="todo.id" 
+        >
+          <!-- v-for문을 돌때면, key값을 꼭!!! 지정해야한다.  -->
+          <!-- 문제... 새롭게 만드는 TODO에 ID값이 없다. -->
+          {{ todo.content }}
+          <!-- true false를 표현할 수 잇는  -->
+          <input type="checkbox" v-model="todo.completed"  style="width:25px;height:25px;" >
+          
+        </li>
+        <!-- <li v-else v-on:click="toggleTodo(todo)">
+          {{ todo.content }} [완료]
+        </li> -->
+      </ul>
+      
+      <footer>
+        <button v-on:click="clearCompleted">clear completed</button>
   
+      </footer>
+      <!-- abc라고 작성하면, cba로 바꾸고 싶다. 밑에와 같이 작성하면 가독성이 떨어지므로, computed를 사용한다.. -->
+      <!-- {{ newTodo.split('').reverse().join('') }} -->
+      {{ now1 }}
+      <br>
+      {{ now2() }}
+      
   </div>
 
   <script>
+    const STORAGE_KEY = 'vue-todos'
+    const todoStorage = {
+      // String to Array
+      fetch: function() {
+       return JSON.parse(localStorage.getItem(STORAGE_KEY))
+      },
+
+      // Array to String
+      save: function(todos) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
+      }
+    }
     // 스크립트 안에서는 쌍따옴표 홑따옴표 둘다사용가능하지만 홑따옴표를 사용해라.
     const app = new Vue({
       el:'#app',
-      data :{
-        todos : [
-          {content : '저녁 메뉴 고민하기' ,
-          completed : true,
-          },
-          {content : '사다리 타기',
-
-          completed : true,
-          },
-          {content : '약속의 2시, 낮잠자기',
-          completed : false,
-          },
-          {content : '야자하기',
-          completed : true,
-          },
-          {content :  '미니 만나기',
-          completed : false,
-          }
-        ],
+      data : {
+        todos: [],
         newTodo: '',
+        // css
         activeColor: 'orange',
         fontSize: 30,
+        //
+        showMode : 'all',
       },
 
       methods : {
-        toggleTodo : function(todo) {
-          if (todo.completed) {
-            todo.completed = false
-          } else {
-            todo.completed = true
+      
+        addTodo : function() {
+          if (this.newTodo) {
+            this.todos.push({
+              id : new Date().getTime(),
+              content : this.newTodo,
+              completed: false,
+            })
+            this.newTodo = ""
+            todoStorage.save(this.todos)
           }
-
         },
-        addTodo : function(){
-          this.todos.push({
-            content : this.newTodo,
-            completed: false,
-          })
-          this.newTodo = ""
-        },
-        clearCompleted : function(){
+        clearCompleted : function() {
           this.todos = this.todos.filter(todo => {
             return todo.completed === false
           })
-        },
+          todoStorage.save(this.todos)
 
+        },
+        
+        now2 : function() {
+          return new Date().getTime()
+        },
       },
+      computed: {
+        // 함수처럼 썻지만 함수가 아니다. 연산을 return값에 반환하여 reversedNewTodo에 저장한다. 
+        now1: function() {
+          return new Date().getTime()
+        },
+        todoByShowMode : function() {
+          // showMode 에 따라, todoList 를 새롭게 반환한다.
+          if (this.showMode === 'notcompleted'){
+            return this.todos.filter(todo => {
+              return todo.completed === false
+            })
+          } else if (this.showMode === 'completed') {
+            return this.todos.filter(todo => {
+              return todo.completed
+            })
+          } else {
+            return this.todos
+          }
+        },
+        // methods에 똑같은 함수를 작성하는것과 computed에 작성하는 것의 차이 : methods에 있는 함수는 어떤 동작을 할때마다 계속 함수가 실행되는 반면, computed에 있는 함수(엄밀히 말하면 값)은 그 대상이 변할때만! 값이 변한다
+        // 즉 메모리사용에 있어서 효율적이다.
+        
+      },
+      // Vue instance가 생성되면 실행하는 함수 : created()
+      created() {
+        this.todos = todoStorage.fetch()
+      },
+
+      watch: {
+        todos: {
+         handler: function() {
+           todoStorage.save(this.todos)
+         },
+         deep:true, // object 의 nested(종속)된 모든 아이템을 다 바라보겠다.
+        }
+      }
     })
   </script>
 </body>
 </html>
+
+<!-- local storage : 데이터가 세션스토리지와는 다르게 브라우저를 껏다 켜도 남아 있다. -->
+  <!-- 로컬 스토리지에 데이터를 저장할때는 오브젝트나 어레이 형식이 남아있지 않는다. -> string으로 관리하기 때문에 json형식의 object를 저장할때도 JSON.stringify를 사용하고, 불러올때는 JSON.parse를 이용한다. -->
+<!-- session storage : 임시저장공간 -->
