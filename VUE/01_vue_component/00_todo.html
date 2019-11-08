@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Todo</title>
+  <style>
+    .todo-list {
+      display: inline-block;
+      /* 부모 테그 크기에 따라감 */
+      width: 32%;
+    }
+  </style>
+
+</head>
+
+<body>
+  <!-- 반복을 지양하기 위해 존재하는 기능 : 컴포넌트  -->
+  <!-- 목표 : todo-list를 캡슐화 하여 관리한다. --> 
+  <div id="app">
+    <div class="todo-list">
+      <h2>취업준비</h2>
+      <!-- 연결 완료 -->
+      <input type="text" v-model="newTodo" v-on:keydown.enter="addTodo()">
+      <button v-on:click="addTodo">+</button>
+      <ul>
+        <li v-for="todo in todos" v-bind:key="todo.id">
+          <span>{{ todo.content }}</span>
+          <button v-on:click="removeTodo(todo)">x</button>
+        </li>
+      </ul>
+    </div>
+    <div class="todo-list">
+      <h2>SSAFY</h2>
+      <!-- 연결 완료 -->
+      <input type="text" v-model="newTodo" v-on:keydown.enter="addTodo()">
+      <button v-on:click="addTodo">+</button>
+      <ul>
+        <li v-for="todo in todos" v-bind:key="todo.id">
+          <span>{{ todo.content }}</span>
+          <button v-on:click="removeTodo(todo)">x</button>
+        </li>
+      </ul>
+    </div>
+    <div class="todo-list">
+      <h2>기타</h2>
+      <!-- 연결 완료 -->
+      <input type="text" v-model="newTodo" v-on:keydown.enter="addTodo()">
+      <button v-on:click="addTodo">+</button>
+      <ul>
+        <li v-for="todo in todos" v-bind:key="todo.id">
+          <span>{{ todo.content }}</span>
+          <button v-on:click="removeTodo(todo)">x</button>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    // 명세서 : 인풋에서 타이핑하는 내용을 플러스라는 버튼을 눌렀을 때 li 태그 안에 span 과 button이 계속 생기는 함수생성(data : todos에 추가)
+    // 
+    const app = new Vue({
+      el: '#app',
+      data: {
+        todos: [],
+        newTodo: '',
+      },
+      methods: {
+        addTodo: function () {
+          if (this.newTodo) {
+            this.todos.push({
+              id: new Date().getTime(),
+              content: this.newTodo
+            })
+            this.newTodo = ''
+          }
+        },
+        removeTodo: function (data) {
+
+          this.todos = this.todos.filter(todo => {
+            return todo.id !== data.id
+          })
+
+
+        },
+
+      }
+    })
+  </script>
+</body>
+
+</html>
